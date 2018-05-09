@@ -197,7 +197,7 @@
         this.$alert(currentChange);
       },
       handleClick(row) {
-        alert(row);
+        this.$alert("查看");
       },
       handleCommand(cmd){
         var _this = this;
