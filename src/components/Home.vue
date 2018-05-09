@@ -6,7 +6,7 @@
         <el-dropdown @command="handleCommand">
   <span class="el-dropdown-link home_userinfo" style="display: flex;align-items: center">
     @LY
-    <i><img src="http://img4.duitang.com/uploads/item/201511/26/20151126112617_vUaQf.jpeg" style="width: 40px;height: 40px;margin-right: 5px;margin-left: 5px;border-radius: 40px"/></i>
+    <i><img src="http://imgsrc.baidu.com/forum/w=580/sign=1588b7c5d739b6004dce0fbfd9503526/7bec54e736d12f2eb97e1a464dc2d56285356898.jpg" style="width: 40px;height: 40px;margin-right: 5px;margin-left: 5px;border-radius: 40px"/></i>
   </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>个人中心</el-dropdown-item>
@@ -95,37 +95,44 @@
             style="width: 100%">
             <el-table-column
               fixed
+              align="center"
               prop="date"
               label="日期"
               width="150">
             </el-table-column>
             <el-table-column
               prop="name"
+              align="center"
               label="姓名"
               width="120">
             </el-table-column>
             <el-table-column
               prop="province"
+              align="center"
               label="省份"
               width="120">
             </el-table-column>
             <el-table-column
               prop="city"
+              align="center"
               label="市区"
               width="120">
             </el-table-column>
             <el-table-column
               prop="address"
               label="地址"
+              align="center"
               width="300">
             </el-table-column>
             <el-table-column
               prop="zip"
               label="邮编"
+              align="center"
               width="120">
             </el-table-column>
             <el-table-column
               fixed="right"
+              align="center"
               label="操作">
               <template slot-scope="scope">
                 <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
@@ -133,6 +140,15 @@
               </template>
             </el-table-column>
           </el-table>
+          <div style="display: flex;justify-content: space-between;margin: 20px 20px 20px -10px;">
+            <el-pagination
+              background
+              :page-size="10"
+              :current-page="1"
+              layout="prev, pager, next"
+              :total="1000">
+            </el-pagination>
+          </div>
         </el-main>
       </el-container>
     </el-container>
@@ -175,10 +191,13 @@
 <script>
   export default {
     methods:{
+      handleClick(row) {
+        alert(row);
+      },
       handleCommand(cmd){
         var _this = this;
         if (cmd == 'logout') {
-          this.$confirm('注销登录, 是否继续?', '提示', {
+          _this.$confirm('注销登录, 是否继续?', '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'
