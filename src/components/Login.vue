@@ -55,11 +55,11 @@
     },
     methods: {
       submitForm: function () {
+        var _this = this;
         this.$refs['loginForm'].validate((valid) => {
           if (valid) {
-//            alert('submit!');
-//            alert(this.loginForm.username);
-            this.$router.push("index");
+            _this.$store.commit('login', "90kjkdlskdl");
+            _this.$router.push("/index");
           } else {
             console.log('error submit!!');
           }
