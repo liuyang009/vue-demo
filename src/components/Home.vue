@@ -145,6 +145,7 @@
               background
               :page-size="10"
               :current-page="1"
+              @current-change="currentChange"
               layout="prev, pager, next"
               :total="1000">
             </el-pagination>
@@ -191,6 +192,10 @@
 <script>
   export default {
     methods:{
+      currentChange(currentChange){
+        this.currentPage = currentChange;
+        this.$alert(currentChange);
+      },
       handleClick(row) {
         alert(row);
       },
@@ -251,7 +256,42 @@
           city: '普陀区',
           address: '上海市普陀区金沙江路 1518 弄',
           zip: 200333
+        },{
+          date: '2016-05-05',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333
+        },{
+          date: '2016-05-06',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333
         }, {
+          date: '2016-05-07',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333
+        },{
+          date: '2016-05-08',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333
+        },{
+          date: '2016-05-09',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333
+        },{
           date: '2016-05-02',
           name: '王小虎',
           province: '上海',
