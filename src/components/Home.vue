@@ -174,6 +174,26 @@
 
 <script>
   export default {
+    methods:{
+      handleCommand(cmd){
+        var _this = this;
+        if (cmd == 'logout') {
+          this.$confirm('注销登录, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            _this.$store.commit('logout');
+            _this.$router.replace({path: '/'});
+          }).catch(() => {
+            _this.$message({
+              type: 'info',
+              message: '取消'
+            });
+          });
+        }
+      }
+    },
     data() {
       return {
         pickerOptions2: {
