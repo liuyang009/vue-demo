@@ -57,9 +57,9 @@
       submitForm: function () {
         this.$refs['loginForm'].validate((valid) => {
           if (valid) {
-            alert('submit!');
-            alert(this.loginForm.username);
-            this.$router.push("/");
+//            alert('submit!');
+//            alert(this.loginForm.username);
+            this.$router.push("index");
           } else {
             console.log('error submit!!');
           }
