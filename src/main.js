@@ -9,6 +9,8 @@ import {getRequest} from './utils/api'
 import {postRequest} from './utils/api'
 import {deleteRequest} from './utils/api'
 import {putRequest} from './utils/api'
+import {initMenu} from './utils/utils'
+
 import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.config.productionTip = false
@@ -26,8 +28,13 @@ router.beforeEach((to, from, next)=> {
     }
     var token = store.state.token;
     if (token == null || token == undefined) {
-      next({path: '/', query: {redirect: to.path}})
+      if (to.meta.requireAuth || to.name == null) {
+        next({path: '/', query: {redirect: to.path}})
+      } else {
+        next();
+      }
     } else {
+      initMenu(router, store);
       next();
     }
   }

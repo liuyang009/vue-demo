@@ -9,6 +9,9 @@ export default new Vuex.Store({
     routes: []
   },
   mutations: {
+    initMenu(state, menus){
+      state.routes = menus;
+    },
     login(state, token){
       state.token = token;
       window.localStorage.setItem('token', JSON.stringify(token));

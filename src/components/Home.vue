@@ -18,129 +18,48 @@
     </el-header>
     <el-container style="height: 500px; border: 1px solid #eee">
       <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-        <el-menu  default-active="1">
-          <el-menu-item index="1" @click="menuRole(1)">
-            <i class="el-icon-location-outline"></i>
-            <span slot="title">门店管理</span>
-          </el-menu-item>
-          <el-menu-item index="2" @click="menuRole(2)">
-            <i class="el-icon-sort"></i>
-            <span slot="title">角色管理</span>
-          </el-menu-item>
-          <el-menu-item index="3">
-            <i class="el-icon-view"></i>
-            <span slot="title">用户管理</span>
-          </el-menu-item>
-          <el-menu-item index="4">
-            <i class="el-icon-menu"></i>
-            <span slot="title">会员管理</span>
-          </el-menu-item>
-          <el-menu-item index="5">
-            <i class="el-icon-goods"></i>
-            <span slot="title">订单管理</span>
-          </el-menu-item>
-        </el-menu>
+        <div style="display: flex;justify-content: flex-start;width: 180px;text-align: left;">
+          <el-menu style="background: #ececec;width: 180px;" unique-opened router>
+            <template v-for="(item,index) in this.routes" v-if="!item.hidden">
+              <el-submenu :key="index" :index="index+''">
+                <template slot="title">
+                  <i :class="item.iconCls" style="color: #20a0ff;width: 14px;"></i>
+                  <span slot="title">{{item.name}}</span>
+                </template>
+                <el-menu-item width="180px"
+                              style="padding-left: 30px;padding-right:0px;margin-left: 0px;width: 170px;text-align: left"
+                              v-for="child in item.children"
+                              :index="child.path"
+                              :key="child.path">{{child.name}}
+                </el-menu-item>
+              </el-submenu>
+            </template>
+          </el-menu>
+        </div>
+       <!-- <el-menu unique-opened router>
+          <template v-for="(item,index) in this.routes" v-if="!item.hidden">
+            <el-menu-item :key="item.path" :index="item.path">
+              <template slot="title">
+                <i :class="item.iconCls"></i>
+                <span slot="title">{{item.name}}</span>
+              </template>
+            </el-menu-item>
+          </template>
+        </el-menu>-->
       </el-aside>
 
       <el-container>
         <el-main>
-          <el-form :inline="true">
-            <el-form-item>
-              <el-input  placeholder="门店名"  clearable></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button>查询</el-button>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" icon="el-icon-plus" @click="showAddShopView">
-                添加门店
-              </el-button>
-            </el-form-item>
-            <el-tag type="info">你还可以添加9家门店</el-tag>
-          </el-form>
-
-          <el-table
-            :data="tableData"
-            border
-            style="width: 100%">
-            <el-table-column
-              fixed
-              align="center"
-              prop="name"
-              label="门店名">
-            </el-table-column>
-
-
-            <el-table-column
-              prop="address"
-              label="门店地址"
-              align="center">
-            </el-table-column>
-            <el-table-column
-              prop="mobile"
-              label="联系电话"
-              align="center">
-            </el-table-column>
-
-            <el-table-column
-              prop="editShop"
-              label="编辑店铺"
-              align="center">
-              <template slot-scope="scope">
-                <el-button type="text">店铺管理</el-button>
-              </template>
-            </el-table-column>
-
-            <el-table-column
-              fixed="right"
-              align="center"
-              label="操作">
-              <template slot-scope="scope">
-                <el-button type="text" @click="showEditShopView(scope.row)" size="small">修改门店</el-button>
-              </template>
-            </el-table-column>
-          </el-table>
-          <div style="display: flex;justify-content: space-between;margin: 20px 20px 20px -10px;">
-            <el-pagination
-              background
-              :page-size="10"
-              :current-page="1"
-              @current-change="currentChange"
-              layout="prev, pager, next"
-              :total="1">
-            </el-pagination>
-          </div>
+          <el-breadcrumb separator-class="el-icon-arrow-right">
+            <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+            <el-breadcrumb-item v-text="this.$router.currentRoute.name"></el-breadcrumb-item>
+          </el-breadcrumb>
+          <keep-alive>
+            <router-view v-if="this.$route.meta.keepAlive"></router-view>
+          </keep-alive>
+          <router-view v-if="!this.$route.meta.keepAlive"></router-view>
         </el-main>
       </el-container>
-      <el-form :model="shop"  ref="addShopForm" style="margin: 0px;padding: 0px;">
-        <div style="text-align: center">
-          <el-dialog
-            :title="dialogTitle"
-            style="padding: 0px;"
-            :close-on-click-modal="false"
-            :visible.sync="dialogVisible"
-            width="30%">
-            <div>
-              <el-form-item label="门店名称:" prop="name">
-                <el-input v-model="shop.name" style="width: 350px"
-                          placeholder="请输入门店名称"></el-input>
-              </el-form-item>
-              <el-form-item label="门店地址">
-                <el-input  v-model="shop.address" style="width: 350px"
-                          placeholder="请输入门店地址"></el-input>
-              </el-form-item>
-              <el-form-item label="联系电话">
-                <el-input  v-model="shop.mobile" style="width: 350px"
-                           placeholder="请输入联系电话"></el-input>
-              </el-form-item>
-            </div>
-            <span slot="footer" class="dialog-footer">
-              <el-button  @click="cancelEidt">取 消</el-button>
-              <el-button  type="primary" @click="addEmp('addShopForm')">确 定</el-button>
-            </span>
-          </el-dialog>
-        </div>
-      </el-form>
     </el-container>
   </el-container>
 </template>
@@ -181,80 +100,28 @@
 <script>
   export default {
     methods:{
-      showEditShopView(row){
-        this.dialogTitle = "修改门店";
-        this.shop = row;
-        this.shop.name = row.name;
-        this.shop.address = row.address;
-        this.shop.mobile = row.mobile;
-        this.dialogVisible = true
-      },
-      emptyData(){
-        this.shop={
-          name: '',
-          address:'',
-          mobile:''
-        }
-      },
-      showAddShopView(){
-        this.dialogTitle = "添加门店";
-        this.dialogVisible = true;
-      },
-      cancelEidt(){
-        this.dialogVisible = false;
-        this.emptyData();
-      },
-      menuRole(type){
-        if(type == 1){
-          this.$router.push("/index");
-        }else if(type == 2){
-          this.$router.push("/role");
-        }else {
-          this.$router.push("/");
-        }
-      },
-      currentChange(currentChange){
-        this.currentPage = currentChange;
-        this.$alert(currentChange);
-      },
-      handleClick(row) {
-        this.$alert("查看");
-      },
       handleCommand(cmd){
         var _this = this;
         if (cmd == 'logout') {
           _this.$confirm('注销登录, 是否继续?', '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
-            type: 'warning'
+            type: 'warning',
+            center: true
           }).then(() => {
             _this.$store.commit('logout');
             _this.$router.replace({path: '/'});
           }).catch(() => {
-            _this.$message({
-              type: 'info',
-              message: '取消'
-            });
           });
         }
       }
     },
     data() {
-      return {
-        dialogTitle:'',
-        dialogVisible: false,
-        shop:{
-          id:'',
-          name:'',
-          address:'',
-          mobile:''
-        },
-        tableData: [{
-          id:1,
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          mobile: '0512-85687963'
-        }]
+      return {}
+    },
+    computed: {
+      routes(){
+        return this.$store.state.routes
       }
     }
   };

@@ -69,7 +69,7 @@
                 var token = data.token;
                 _this.$store.commit('login', token)
                 var path = _this.$route.query.redirect;
-                _this.$router.replace({path: path == '/' || path == undefined ? '/index' : path});
+                _this.$router.replace({path: path == '/' || path == undefined ? '/home' : path});
               }
             });
           }
