@@ -46,7 +46,7 @@
         <el-main>
           <el-form :inline="true">
             <el-form-item>
-              <el-input  placeholder="请输入登录名称" clearable></el-input>
+              <el-input  placeholder="请输入角色名称" clearable></el-input>
             </el-form-item>
             <el-form-item>
               <el-button>查询</el-button>
