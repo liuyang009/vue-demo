@@ -18,7 +18,7 @@
     </el-header>
     <el-container style="height: 500px; border: 1px solid #eee">
       <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-        <el-menu  default-active="1">
+        <el-menu  default-active="2">
           <el-menu-item index="1" @click="menuRole(1)">
             <i class="el-icon-location-outline"></i>
             <span slot="title">门店管理</span>
@@ -46,17 +46,16 @@
         <el-main>
           <el-form :inline="true">
             <el-form-item>
-              <el-input  placeholder="门店名"  clearable></el-input>
+              <el-input  placeholder="请输入登录名称" clearable></el-input>
             </el-form-item>
             <el-form-item>
               <el-button>查询</el-button>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" icon="el-icon-plus" @click="showAddShopView">
-                添加门店
+              <el-button type="primary" icon="el-icon-plus">
+                新增角色
               </el-button>
             </el-form-item>
-            <el-tag type="info">你还可以添加9家门店</el-tag>
           </el-form>
 
           <el-table
@@ -67,36 +66,29 @@
               fixed
               align="center"
               prop="name"
-              label="门店名">
+              label="角色名称">
             </el-table-column>
 
 
             <el-table-column
-              prop="address"
-              label="门店地址"
+              prop="desc"
+              label="备注"
               align="center">
             </el-table-column>
             <el-table-column
-              prop="mobile"
-              label="联系电话"
+              prop="createDate"
+              label="创建时间"
               align="center">
             </el-table-column>
 
-            <el-table-column
-              prop="editShop"
-              label="编辑店铺"
-              align="center">
-              <template slot-scope="scope">
-                <el-button type="text">店铺管理</el-button>
-              </template>
-            </el-table-column>
 
             <el-table-column
               fixed="right"
               align="center"
               label="操作">
               <template slot-scope="scope">
-                <el-button type="text" @click="showEditShopView(scope.row)" size="small">修改门店</el-button>
+                <el-button type="text" @click="handleClick(scope.row)" size="small">修改</el-button>
+                <el-button type="text" @click="handleClick(scope.row)" size="small">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -112,35 +104,6 @@
           </div>
         </el-main>
       </el-container>
-      <el-form :model="shop"  ref="addShopForm" style="margin: 0px;padding: 0px;">
-        <div style="text-align: center">
-          <el-dialog
-            :title="dialogTitle"
-            style="padding: 0px;"
-            :close-on-click-modal="false"
-            :visible.sync="dialogVisible"
-            width="30%">
-            <div>
-              <el-form-item label="门店名称:" prop="name">
-                <el-input v-model="shop.name" style="width: 350px"
-                          placeholder="请输入门店名称"></el-input>
-              </el-form-item>
-              <el-form-item label="门店地址">
-                <el-input  v-model="shop.address" style="width: 350px"
-                          placeholder="请输入门店地址"></el-input>
-              </el-form-item>
-              <el-form-item label="联系电话">
-                <el-input  v-model="shop.mobile" style="width: 350px"
-                           placeholder="请输入联系电话"></el-input>
-              </el-form-item>
-            </div>
-            <span slot="footer" class="dialog-footer">
-              <el-button  @click="cancelEidt">取 消</el-button>
-              <el-button  type="primary" @click="addEmp('addShopForm')">确 定</el-button>
-            </span>
-          </el-dialog>
-        </div>
-      </el-form>
     </el-container>
   </el-container>
 </template>
@@ -181,29 +144,6 @@
 <script>
   export default {
     methods:{
-      showEditShopView(row){
-        this.dialogTitle = "修改门店";
-        this.shop = row;
-        this.shop.name = row.name;
-        this.shop.address = row.address;
-        this.shop.mobile = row.mobile;
-        this.dialogVisible = true
-      },
-      emptyData(){
-        this.shop={
-          name: '',
-          address:'',
-          mobile:''
-        }
-      },
-      showAddShopView(){
-        this.dialogTitle = "添加门店";
-        this.dialogVisible = true;
-      },
-      cancelEidt(){
-        this.dialogVisible = false;
-        this.emptyData();
-      },
       menuRole(type){
         if(type == 1){
           this.$router.push("/index");
@@ -241,19 +181,10 @@
     },
     data() {
       return {
-        dialogTitle:'',
-        dialogVisible: false,
-        shop:{
-          id:'',
-          name:'',
-          address:'',
-          mobile:''
-        },
         tableData: [{
-          id:1,
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          mobile: '0512-85687963'
+          name: '总管理',
+          desc: '胡桃里园区店老板',
+          createDate: '2018-05-10 10:27'
         }]
       }
     }

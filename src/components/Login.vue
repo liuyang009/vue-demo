@@ -58,10 +58,20 @@
         var _this = this;
         this.$refs['loginForm'].validate((valid) => {
           if (valid) {
-            _this.$store.commit('login', "90kjkdlskdl");
-            _this.$router.push("/index");
-          } else {
-            console.log('error submit!!');
+            this.loading = true;
+            this.postRequest('/login',{
+              mobile: this.loginForm.username,
+              password: this.loginForm.password
+            }).then(resp => {
+              _this.loading = false;
+              var data = resp.data;
+              if (resp && data.code == 200){
+                var token = data.token;
+                _this.$store.commit('login', token)
+                var path = _this.$route.query.redirect;
+                _this.$router.replace({path: path == '/' || path == undefined ? '/index' : path});
+              }
+            });
           }
         });
       }

@@ -5,18 +5,16 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    user: {
-      name: window.localStorage.getItem('user' || '[]') == null ? '未登录' : JSON.parse(window.localStorage.getItem('user' || '[]')).name
-    },
+    token:  window.localStorage.getItem('token'),
     routes: []
   },
   mutations: {
-    login(state, user){
-      state.user = user;
-      window.localStorage.setItem('user', JSON.stringify(user));
+    login(state, token){
+      state.token = token;
+      window.localStorage.setItem('token', JSON.stringify(token));
     },
     logout(state){
-      window.localStorage.removeItem('user');
+      window.localStorage.removeItem('token');
       state.routes = [];
     }
   },
