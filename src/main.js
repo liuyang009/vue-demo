@@ -3,18 +3,17 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import store from './store'
 import ElementUI from 'element-ui'
 import {getRequest} from './utils/api'
 import {postRequest} from './utils/api'
 import {deleteRequest} from './utils/api'
 import {putRequest} from './utils/api'
 import {initMenu} from './utils/utils'
+import store from './store'
 
 import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.config.productionTip = false
-
 Vue.use(ElementUI);
 Vue.prototype.getRequest = getRequest;
 Vue.prototype.postRequest = postRequest;

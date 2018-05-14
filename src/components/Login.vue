@@ -8,7 +8,7 @@
     <el-form-item prop="password">
       <el-input type="password" v-model="loginForm.password" auto-complete="off" placeholder="密码"></el-input>
     </el-form-item>
-    <el-checkbox class="login_remember" v-model="checked" label-position="left">记住密码</el-checkbox>
+   <!-- <el-checkbox class="login_remember" v-model="checked" label-position="left">记住密码</el-checkbox>-->
     <el-form-item style="width: 100%">
       <el-button type="primary" @click.native.prevent="submitForm" style="width: 100%">登录</el-button>
     </el-form-item>
@@ -56,22 +56,17 @@
     methods: {
       submitForm: function () {
         var _this = this;
-        this.$refs['loginForm'].validate((valid) => {
-          if (valid) {
-            this.loading = true;
-            this.postRequest('/login',{
-              mobile: this.loginForm.username,
-              password: this.loginForm.password
-            }).then(resp => {
-              _this.loading = false;
-              var data = resp.data;
-              if (resp && data.code == 200){
-                var token = data.token;
-                _this.$store.commit('login', token)
-                var path = _this.$route.query.redirect;
-                _this.$router.replace({path: path == '/' || path == undefined ? '/home' : path});
-              }
-            });
+        this.loading = true;
+        this.postRequest('/login', {
+          username: this.loginForm.username,
+          password: this.loginForm.password
+        }).then(resp=> {
+          _this.loading = false;
+          if (resp && resp.status == 200) {
+            var data = resp.data;
+            _this.$store.commit('login', data.token);
+            var path = _this.$route.query.redirect;
+            _this.$router.replace({path: path == '/' || path == undefined ? '/index' : path});
           }
         });
       }
