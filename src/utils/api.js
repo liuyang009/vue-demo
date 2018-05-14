@@ -15,12 +15,12 @@ axios.interceptors.request.use(config=> {
 /**
  * 响应请求
  */
-axios.interceptors.response.use(data=> {
-  if (data.code && data.code != 200) {
-    Message.error({message: data.data.msg});
+axios.interceptors.response.use(resp=> {
+  if (resp.data.code && resp.data.code != 200) {
+    Message.error({message: resp.data.msg});
     return;
   }
-  return data;
+  return resp;
 }, err=> {
   if (err.response.status == 504||err.response.status == 404) {
     Message.error({message: '服务器被吃了⊙﹏⊙∥'});
