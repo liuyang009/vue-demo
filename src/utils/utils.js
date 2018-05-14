@@ -34,6 +34,8 @@ export const formatRoutes = (routes)=> {
           require(['../components/' + component + '.vue'], resolve)
         } else if (component.startsWith("Shop")) {
           require(['../components/shop/' + component + '.vue'], resolve)
+        }else if (component.startsWith("Role")) {
+          require(['../components/role/' + component + '.vue'], resolve)
         }
       },
       name: name,
