@@ -88,7 +88,7 @@
           }).then(resp=> {
             if (resp && resp.status == 200) {
               var data = resp.data;
-              _this.$message({type: data.status, message: data.msg});
+              _this.$message({ showClose: true, type: 'success', message: "恭喜你，添加角色成功"});
               _this.initRoles();
               _this.newRole = '';
               _this.newRoleZh = '';
@@ -134,7 +134,7 @@
         this.getRequest("/role/list").then(resp=> {
           _this.loading = false;
           if (resp && resp.status == 200) {
-            _this.roles = resp.data.data;
+            _this.roles = resp.data.roles;
             _this.activeColItem=-1
           }
         })
