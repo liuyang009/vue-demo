@@ -46,6 +46,8 @@
   </div>
 </template>
 <script>
+  import {isNotNullORBlank} from '../../utils/utils';
+
   export default{
     mounted: function () {
      this.loading = true;
@@ -80,9 +82,9 @@
         if (isNotNullORBlank(this.newRole, this.newRoleZh)) {
           this.loading = true;
           var _this = this;
-          this.postRequest("/system/basic/addRole", {
-            role: this.newRole,
-            roleZh: this.newRoleZh
+          this.postRequest("/role/add", {
+            name: this.newRole,
+            nameZh: this.newRoleZh
           }).then(resp=> {
             if (resp && resp.status == 200) {
               var data = resp.data;
@@ -129,7 +131,7 @@
       },
       initRoles(){
         var _this = this;
-        this.getRequest("/roles").then(resp=> {
+        this.getRequest("/role/list").then(resp=> {
           _this.loading = false;
           if (resp && resp.status == 200) {
             _this.roles = resp.data.data;
