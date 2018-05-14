@@ -17,7 +17,7 @@
       </div>
     </el-header>
     <el-container style="height: 500px; border: 1px solid #eee">
-      <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
+      <el-aside width="180px" style="background-color: rgb(238, 241, 246)">
         <div style="display: flex;justify-content: flex-start;width: 180px;text-align: left;">
           <el-menu style="background: #ececec;width: 180px;" unique-opened router>
             <template v-for="(item,index) in this.routes" v-if="!item.hidden">

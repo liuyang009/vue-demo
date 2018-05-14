@@ -27,11 +27,7 @@ router.beforeEach((to, from, next)=> {
     }
     var token = store.state.token;
     if (token == null || token == undefined) {
-      if (to.meta.requireAuth || to.name == null) {
-        next({path: '/', query: {redirect: to.path}})
-      } else {
-        next();
-      }
+      next({path: '/', query: {redirect: to.path}})
     } else {
       initMenu(router, store);
       next();
