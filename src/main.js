@@ -10,6 +10,7 @@ import {deleteRequest} from './utils/api'
 import {putRequest} from './utils/api'
 import {initMenu} from './utils/utils'
 import store from './store'
+import './utils/filter_utils'
 
 import 'element-ui/lib/theme-chalk/index.css';
 

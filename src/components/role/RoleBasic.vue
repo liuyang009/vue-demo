@@ -62,10 +62,10 @@
           type: 'warning'
         }).then(() => {
           _this.loading = true;
-          _this.deleteRequest("/system/basic/role/" + rid).then(resp=> {
+          _this.deleteRequest("/role/delete/" + rid).then(resp=> {
             if (resp && resp.status == 200) {
               var data = resp.data;
-              _this.$message({type: data.status, message: data.msg})
+              _this.$message({showClose: true, type: 'success', message: "恭喜你，删除角色成功"})
               _this.initRoles();
             } else {
               _this.loading = false;
@@ -83,8 +83,8 @@
           this.loading = true;
           var _this = this;
           this.postRequest("/role/add", {
-            name: this.newRole,
-            nameZh: this.newRoleZh
+            'name': this.newRole,
+            'nameZh': this.newRoleZh
           }).then(resp=> {
             if (resp && resp.status == 200) {
               var data = resp.data;
@@ -118,10 +118,10 @@
           return;
         }
         var _this = this;
-        this.getRequest("/menu").then(resp=> {
+        this.getRequest("/role/menu/" + activeName).then(resp=> {
           if (resp && resp.status == 200) {
             var data = resp.data;
-            _this.treeData = data.data;
+            _this.treeData = data.menus;
             _this.checkedKeys = data.mids;
           }
         })
