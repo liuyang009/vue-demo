@@ -1,7 +1,5 @@
 <template>
   <div>
-    <el-container>
-      <el-main>
       <el-form :inline="true">
         <el-form-item>
           <el-input  placeholder="用户名" v-model="user.username" clearable></el-input>
@@ -97,9 +95,7 @@
           </el-pagination>
         </div>
 
-
-      </el-main>
-      <el-form :model="user" label-width="100px"
+      <el-form :model="user" label-width="85px"
                :rules="rules" ref="addUserForm" style="margin: 0px;padding: 0px;">
         <div style="text-align: left">
           <el-dialog
@@ -110,29 +106,41 @@
             width="30%">
             <el-row>
               <el-form-item label="用户名" prop="username">
-                <el-input v-model="user.username" style="width: 350px"
+                <el-input v-model="user.username" style="width: 80%"
                           placeholder="请输入用户名"></el-input>
               </el-form-item>
               <el-form-item label="姓名">
-                <el-input  v-model="user.name" style="width: 350px"
+                <el-input  v-model="user.name" style="width: 80%"
                            placeholder="请输入姓名"></el-input>
               </el-form-item>
               <el-form-item label="邮箱" prop="email">
-                <el-input  v-model="user.email" style="width: 350px"
+                <el-input  v-model="user.email" style="width: 80%"
                            placeholder="请输入邮箱"></el-input>
               </el-form-item>
               <el-form-item label="手机号" prop="mobile">
-                <el-input  v-model="user.mobile" style="width: 350px"
+                <el-input  v-model="user.mobile" style="width: 80%"
                            placeholder="请输入手机号"></el-input>
               </el-form-item>
               <el-form-item label="出生日期:" prop="birth">
                 <el-date-picker
                   v-model="user.birth"
-                  style="width: 350px"
+                  style="width: 80%"
                   type="date"
                   placeholder="出生日期">
                 </el-date-picker>
               </el-form-item>
+
+              <el-form-item label="选择角色:" prop="roleIds">
+                <el-select v-model="user.roleIds" multiple placeholder="请选择" style="width: 80%">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+
             </el-row>
             <span slot="footer" class="dialog-footer">
               <el-button  @click="cancelEidt">取 消</el-button>
@@ -141,7 +149,6 @@
           </el-dialog>
         </div>
       </el-form>
-    </el-container>
   </div>
 </template>
 
@@ -154,7 +161,8 @@
       showEditShopView(row){
         this.dialogTitle = "修改用户";
         this.user = row;
-        this.dialogVisible = true
+        this.dialogVisible = true;
+        this.user.roleIds = [3]
       },
       cancelSearch(){
         this.emptyUserData();
@@ -171,6 +179,7 @@
             var data = resp.data;
             _this.userData = data.data.content;
             _this.totalCount = data.data.totalElements;
+            _this.options = data.roles;
           }
         })
       },
@@ -246,9 +255,6 @@
           }
         })
       },
-      deleteManyEmps(){
-
-      },
       emptyUserData(){
         this.user={
           id:'',
@@ -256,7 +262,8 @@
           username:'',
           mobile:'',
           email:'',
-          birth:''
+          birth:'',
+          roleIds:[]
         }
       },
       showAddUserView(){
@@ -289,8 +296,10 @@
           username:'',
           mobile:'',
           email:'',
-          birth:''
+          birth:'',
+          roleIds:[]
         },
+        options: [],
         rules: {
           username: [
             { required: true, message: '请输入用户名称', trigger: 'blur' },
@@ -298,6 +307,9 @@
           ],
           birth: [
             {required: true, message: '请选择日期', trigger: 'change' }
+          ],
+          roleIds: [
+            {required: true, message: '请选择角色', trigger: 'blur' }
           ],
           email: [
             {required: true, message: '请输入电子邮箱', trigger: 'blur'},

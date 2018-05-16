@@ -102,13 +102,12 @@
       updateRoleMenu(index){
         var checkedKeys = this.$refs.tree[index].getCheckedKeys(true);
         var _this = this;
-        this.putRequest("/system/basic/updateMenuRole", {
-          rid: this.activeColItem,
-          mids: checkedKeys
+        this.putRequest("/role/basic/menu", {
+          roleId: this.activeColItem,
+          menuIds: checkedKeys
         }).then(resp=> {
           if (resp && resp.status == 200) {
-            var data = resp.data;
-            _this.$message({type: data.status, message: data.msg})
+            _this.$message({ showClose: true, type: 'success', message: "恭喜你，设置角色权限成功"});
             _this.activeColItem = -1;
           }
         })

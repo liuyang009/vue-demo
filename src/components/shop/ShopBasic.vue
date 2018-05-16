@@ -1,7 +1,5 @@
 <template>
   <div>
-    <el-container>
-      <el-main>
       <el-form :inline="true">
         <el-form-item>
           <el-input  placeholder="门店名"  clearable></el-input>
@@ -68,7 +66,6 @@
           :total="1">
         </el-pagination>
       </div>
-      </el-main>
       <el-form :model="shop"  ref="addShopForm" style="margin: 0px;padding: 0px;">
         <div style="text-align: center">
           <el-dialog
@@ -98,7 +95,6 @@
           </el-dialog>
         </div>
       </el-form>
-    </el-container>
   </div>
 </template>
 
