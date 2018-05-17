@@ -130,6 +130,15 @@
                 </el-date-picker>
               </el-form-item>
 
+              <el-form-item label="密码" prop="password">
+                <el-input v-model="user.password" type="password" style="width: 80%"
+                          placeholder="密码"></el-input>
+              </el-form-item>
+              <el-form-item label="确认密码" prop="checkPass">
+                <el-input v-model="user.checkPass" style="width: 80%"
+                          type="password" placeholder="确认密码"></el-input>
+              </el-form-item>
+
               <el-form-item label="选择角色:" prop="roleIds">
                 <el-select v-model="user.roleIds" multiple placeholder="请选择" style="width: 80%">
                   <el-option
@@ -263,6 +272,8 @@
           mobile:'',
           email:'',
           birth:'',
+          password:'',
+          checkPass:'',
           roleIds:[]
         }
       },
@@ -283,6 +294,17 @@
       }
     },
     data() {
+
+      var validatePass2 = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入密码'));
+        } else if (value !== this.user.password) {
+          callback(new Error('两次输入密码不一致!'));
+        } else {
+          callback();
+        }
+      }
+
       return {
         dialogTitle:'',
         dialogVisible: false,
@@ -297,6 +319,8 @@
           mobile:'',
           email:'',
           birth:'',
+          password:'',
+          checkPass:'',
           roleIds:[]
         },
         options: [],
@@ -304,6 +328,13 @@
           username: [
             { required: true, message: '请输入用户名称', trigger: 'blur' },
             { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
+          ],
+          password: [
+            { required: true, message: '请输入密码', trigger: 'blur' },
+            { min: 3, max: 10, message: '长度在 6 到 10 个字符', trigger: 'blur' }
+          ],
+          checkPass: [
+            { required: true, validator: validatePass2, trigger: 'blur' }
           ],
           birth: [
             {required: true, message: '请选择日期', trigger: 'change' }

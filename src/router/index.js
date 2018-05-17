@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
-import Role from '@/components/Role'
+import Index from '@/components/Index'
 import Login from '@/components/Login'
 
 Vue.use(Router)
@@ -25,7 +25,7 @@ export default new Router({
       children:[{
         path: '/index',
         name: '主页',
-        component: Role,
+        component: Index,
         hidden:true
       }]
     }
