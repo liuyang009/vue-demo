@@ -288,10 +288,7 @@
       },
       currentChange(currentChange){
         this.currentPage = currentChange;
-        this.$alert(currentChange);
-      },
-      handleClick(row) {
-        this.$alert("查看");
+        this.loadUsers();
       }
     },
     data() {
