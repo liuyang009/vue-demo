@@ -130,11 +130,11 @@
                 </el-date-picker>
               </el-form-item>
 
-              <el-form-item label="密码" prop="password">
+              <el-form-item label="密码" prop="password"  v-if="showPwd">
                 <el-input v-model="user.password" type="password" style="width: 80%"
                           placeholder="密码"></el-input>
               </el-form-item>
-              <el-form-item label="确认密码" prop="checkPass">
+              <el-form-item label="确认密码" prop="checkPass"  v-if="showPwd">
                 <el-input v-model="user.checkPass" style="width: 80%"
                           type="password" placeholder="确认密码"></el-input>
               </el-form-item>
@@ -171,6 +171,7 @@
         this.dialogTitle = "修改用户";
         this.user = row;
         this.dialogVisible = true;
+        this.showPwd = false;
         this.user.roleIds = [3]
       },
       cancelSearch(){
@@ -266,7 +267,7 @@
       },
       emptyUserData(){
         this.user={
-          id:'',
+          id: 0,
           name:'',
           username:'',
           mobile:'',
@@ -309,11 +310,12 @@
         dialogTitle:'',
         dialogVisible: false,
         tableLoading: false,
+        showPwd: true,
         multipleSelection: [],
         totalCount: -1,
         currentPage: 1,
         user:{
-          id:'',
+          id: 0,
           name:'',
           username:'',
           mobile:'',

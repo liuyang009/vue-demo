@@ -9,7 +9,7 @@
     <i><img src="http://imgsrc.baidu.com/forum/w=580/sign=1588b7c5d739b6004dce0fbfd9503526/7bec54e736d12f2eb97e1a464dc2d56285356898.jpg" style="width: 40px;height: 40px;margin-right: 5px;margin-left: 5px;border-radius: 40px"/></i>
   </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>修改密码</el-dropdown-item>
+            <el-dropdown-item command="updatePwd">修改密码</el-dropdown-item>
             <el-dropdown-item command="logout" divided>注销</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -36,6 +36,35 @@
           </el-menu>
         </div>
       </el-aside>
+
+
+      <el-form label-width="85px"
+               :rules="rules" style="margin: 0px;padding: 0px;">
+        <div style="text-align: left">
+          <el-dialog
+            :title="dialogTitle"
+            style="padding: 0px;"
+            :close-on-click-modal="false"
+            :visible.sync="dialogVisible"
+            width="30%">
+            <el-row>
+              <el-form-item label="密码" prop="password">
+                <el-input v-model="password" type="password" style="width: 80%"
+                          placeholder="密码"></el-input>
+              </el-form-item>
+              <el-form-item label="确认密码" prop="checkPass">
+                <el-input v-model="checkPass" style="width: 80%"
+                          type="password" placeholder="确认密码"></el-input>
+              </el-form-item>
+
+            </el-row>
+            <span slot="footer" class="dialog-footer">
+              <el-button  @click="cancelEidt">取 消</el-button>
+              <el-button  type="primary" @click="addUser('addUserForm')">确 定</el-button>
+            </span>
+          </el-dialog>
+        </div>
+      </el-form>
 
       <el-container>
         <el-main>
@@ -89,6 +118,15 @@
 <script>
   export default {
     methods:{
+      updatePwd(){
+        this.dialogTitle = "修改密码";
+        this.dialogVisible = true;
+      },
+      cancelEidt(){
+        this.dialogVisible = false;
+        this.password ='';
+        this.checkPass='';
+      },
       handleCommand(cmd){
         var _this = this;
         if (cmd == 'logout') {
@@ -103,10 +141,18 @@
           }).catch(() => {
           });
         }
+        if (cmd == 'updatePwd'){
+          _this.updatePwd();
+        }
       }
     },
     data() {
-      return {}
+      return {
+        dialogTitle:'',
+        dialogVisible: false,
+        password:'',
+        checkPass:''
+      }
     },
     computed: {
       routes(){
