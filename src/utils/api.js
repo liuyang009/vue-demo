@@ -5,7 +5,10 @@ import {Message} from 'element-ui'
  * 请求拦截
  */
 axios.interceptors.request.use(config=> {
-  config.headers['token'] = window.localStorage.getItem('token');
+  var data = window.localStorage.getItem('data');
+  if (data != null || data != undefined){
+    config.headers['token'] = JSON.parse(data).token;
+  }
   return config;
 }, err=> {
   Message.error({message: '请求超时!'});

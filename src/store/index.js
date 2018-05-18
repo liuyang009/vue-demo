@@ -5,19 +5,19 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    token:  window.localStorage.getItem('token'),
+    data:  window.localStorage.getItem('data'),
     routes: []
   },
   mutations: {
     initMenu(state, menus){
       state.routes = menus;
     },
-    login(state, token){
-      state.token = token;
-      window.localStorage.setItem('token', JSON.stringify(token));
+    login(state, data){
+      state.data = data;
+      window.localStorage.setItem('data', JSON.stringify(data));
     },
     logout(state){
-      window.localStorage.removeItem('token');
+      window.localStorage.removeItem('data');
       state.routes = [];
     }
   },

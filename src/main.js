@@ -26,7 +26,7 @@ router.beforeEach((to, from, next)=> {
       next();
       return;
     }
-    var token = store.state.token;
+    var token = JSON.parse(window.localStorage.getItem('data')).token;
     if (token == null || token == undefined) {
       next({path: '/', query: {redirect: to.path}})
     } else {

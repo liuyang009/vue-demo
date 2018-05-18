@@ -64,7 +64,7 @@
           _this.loading = false;
           if (resp && resp.status == 200) {
             var data = resp.data;
-            _this.$store.commit('login', data.token);
+            _this.$store.commit('login', data.data);
             var path = _this.$route.query.redirect;
             _this.$router.replace({path: path == '/' || path == undefined ? '/index' : path});
           }
