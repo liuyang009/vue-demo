@@ -17,7 +17,9 @@ axios.interceptors.request.use(config=> {
  */
 axios.interceptors.response.use(resp=> {
   if (resp.data.code && resp.data.code != 200) {
-    Message.error({message: resp.data.msg});
+    if (resp.data.code != 511){
+      Message.error({message: resp.data.msg});
+    }
     return;
   }
   return resp;
