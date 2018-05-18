@@ -39,7 +39,7 @@
 
 
       <el-form label-width="85px"
-               :rules="rules" style="margin: 0px;padding: 0px;">
+                style="margin: 0px;padding: 0px;">
         <div style="text-align: left">
           <el-dialog
             :title="dialogTitle"
