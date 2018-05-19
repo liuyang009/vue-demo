@@ -172,7 +172,6 @@
         this.user = row;
         this.dialogVisible = true;
         this.showPwd = false;
-        this.user.roleIds = [3]
       },
       cancelSearch(){
         this.emptyUserData();
