@@ -43,7 +43,7 @@
           label="编辑店铺"
           align="center">
           <template slot-scope="scope">
-            <el-button type="text">店铺管理</el-button>
+            <el-button type="text" @click="managerShop(1)" >店铺管理</el-button>
           </template>
         </el-table-column>
 
@@ -115,6 +115,11 @@
           address:'',
           mobile:''
         }
+      },
+      managerShop(id){
+        this.$router.push({
+          path: '/shopManager/'+id
+        })
       },
       showAddShopView(){
         this.dialogTitle = "添加门店";
