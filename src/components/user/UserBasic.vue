@@ -66,12 +66,21 @@
           align="center">
         </el-table-column>
 
-
         <el-table-column
           prop="gmtCreate"
           label="创建时间"
           align="center">
           <template slot-scope="scope">{{ scope.row.gmtCreate | formatDateTime}}</template>
+        </el-table-column>
+
+        <el-table-column
+          prop="status"
+          label="状态"
+          align="center">
+          <template slot-scope="scope">
+            <span v-if="scope.row.status == 1">正常</span>
+            <span v-if="scope.row.status == 0">禁用</span>
+          </template>
         </el-table-column>
 
         <el-table-column
@@ -138,6 +147,19 @@
                 <el-input v-model="user.checkPass" style="width: 80%"
                           type="password" placeholder="确认密码"></el-input>
               </el-form-item>
+
+
+              <el-form-item label="选择状态:">
+                <el-select v-model="user.status" placeholder="请选择">
+                  <el-option
+                    v-for="item in options2"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+
 
               <el-form-item label="选择角色:" prop="roleIds">
                 <el-select v-model="user.roleIds" multiple placeholder="请选择" style="width: 80%">
@@ -272,6 +294,7 @@
           mobile:'',
           email:'',
           birth:'',
+          status: 1,
           password:'',
           checkPass:'',
           roleIds:[]
@@ -314,6 +337,7 @@
           id: 0,
           name:'',
           username:'',
+          status: 1,
           mobile:'',
           email:'',
           birth:'',
@@ -322,6 +346,13 @@
           roleIds:[]
         },
         options: [],
+        options2:[{
+          value: 1,
+          label: '正常'
+        }, {
+          value: 0,
+          label: '禁用'
+        }],
         rules: {
           username: [
             { required: true, message: '请输入用户名称', trigger: 'blur' },

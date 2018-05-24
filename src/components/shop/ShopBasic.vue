@@ -75,6 +75,20 @@
             :visible.sync="dialogVisible"
             width="30%">
             <div>
+              <el-form-item label="活动图片:" prop="images">
+                <el-upload
+                  class="upload-demo"
+                  action="http://127.0.0.1:9090/api/upload2"
+                  :on-preview="handlePreview"
+                  :on-remove="handleRemove"
+                  :onSuccess="uploadSuccess"
+                  :beforeUpload="beforeAvatarUpload"
+                  :file-list="fileList2"
+                  list-type="picture">
+                  <el-button size="small" type="primary">点击上传</el-button>
+                <!--  <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
+                </el-upload>
+              </el-form-item>
               <el-form-item label="门店名称:" prop="name">
                 <el-input v-model="shop.name" style="width: 350px"
                           placeholder="请输入门店名称"></el-input>
@@ -101,6 +115,30 @@
 <script>
   export default {
     methods:{
+      handleRemove(file, fileList) {
+        console.log(file, fileList);
+      },
+      handlePreview(file) {
+        console.log(file);
+      },
+      uploadSuccess (response, file, fileList) {
+        console.log('上传文件', response)
+      },
+      // 上传前对文件的大小的判断
+      beforeAvatarUpload (file) {
+        const extension = file.name.split('.')[1] === 'png'
+        const extension2 = file.name.split('.')[1] === 'jpg'
+        const extension3 = file.name.split('.')[1] === 'jpeg'
+        const extension4 = file.name.split('.')[1] === 'bmp'
+        const isLt2M = file.size / 1024 / 1024 < 2
+        if (!extension && !extension2 && !extension3 && !extension4) {
+          this.$message({showClose: true, type: 'warning', message: "上传图片只能是 png、jpg、jpeg、bmp 格式!"});
+        }
+        if (!isLt2M) {
+          console.log('上传图片大小不能超过 2MB!')
+        }
+        return extension || extension2 || extension3 || extension4 && isLt2M
+      },
       showEditShopView(row){
         this.dialogTitle = "修改门店";
         this.shop = row;
@@ -147,6 +185,7 @@
           address:'',
           mobile:''
         },
+        fileList2: [],
         tableData: [{
           id:1,
           name: '王小虎',
