@@ -90,13 +90,13 @@
                 <!--  <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
                 </el-upload>
               </el-form-item>
-              <el-form-item label="门店名称:" prop="name">
+              <el-form-item label="活动名称:" prop="name">
                 <el-input v-model="shop.name" style="width: 350px"
-                          placeholder="请输入门店名称"></el-input>
+                          placeholder="请输入活动名称"></el-input>
               </el-form-item>
-              <el-form-item label="门店地址">
+              <el-form-item label="链接地址">
                 <el-input  v-model="shop.address" style="width: 350px"
-                           placeholder="请输入门店地址"></el-input>
+                           placeholder="请输入活动链接地址"></el-input>
               </el-form-item>
               <el-form-item label="联系电话">
                 <el-input  v-model="shop.mobile" style="width: 350px"
@@ -161,7 +161,7 @@
         })
       },
       showAddShopView(){
-        this.dialogTitle = "添加门店";
+        this.dialogTitle = "新增热门活动";
         this.dialogVisible = true;
       },
       cancelEidt(){
