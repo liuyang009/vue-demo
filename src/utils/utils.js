@@ -50,6 +50,8 @@ export const formatRoutes = (routes)=> {
           require(['../components/role/' + component + '.vue'], resolve)
         }else if (component.startsWith("User")) {
           require(['../components/user/' + component + '.vue'], resolve)
+        }else if (component.startsWith("Invoic")) {
+          require(['../components/invoic/' + component + '.vue'], resolve)
         }
       },
       name: name,

@@ -30,7 +30,7 @@
         style="width: 100%">
         <el-table-column
           type="selection"
-          align="left"
+          align="center"
           width="30">
         </el-table-column>
         <el-table-column
