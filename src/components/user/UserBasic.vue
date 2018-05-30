@@ -110,6 +110,7 @@
           <el-dialog
             :title="dialogTitle"
             style="padding: 0px;"
+            :before-close="cancelEidt"
             :close-on-click-modal="false"
             :visible.sync="dialogVisible"
             width="30%">

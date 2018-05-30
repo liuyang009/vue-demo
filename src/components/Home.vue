@@ -38,29 +38,30 @@
       </el-aside>
 
 
-      <el-form label-width="85px"
+      <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="85px"
                 style="margin: 0px;padding: 0px;">
         <div style="text-align: left">
           <el-dialog
             :title="dialogTitle"
             style="padding: 0px;"
+            :before-close="cancelEidt"
             :close-on-click-modal="false"
             :visible.sync="dialogVisible"
             width="30%">
             <el-row>
               <el-form-item label="密码" prop="password">
-                <el-input v-model="password" type="password" style="width: 80%"
+                <el-input v-model="dataForm.password" type="password" style="width: 80%"
                           placeholder="密码"></el-input>
               </el-form-item>
               <el-form-item label="确认密码" prop="checkPass">
-                <el-input v-model="checkPass" style="width: 80%"
+                <el-input v-model="dataForm.checkPass" style="width: 80%"
                           type="password" placeholder="确认密码"></el-input>
               </el-form-item>
 
             </el-row>
             <span slot="footer" class="dialog-footer">
               <el-button  @click="cancelEidt">取 消</el-button>
-              <el-button  type="primary" @click="addUser('addUserForm')">确 定</el-button>
+              <el-button  type="primary" @click="dataFormSubmit()">确 定</el-button>
             </span>
           </el-dialog>
         </div>
@@ -124,8 +125,29 @@
       },
       cancelEidt(){
         this.dialogVisible = false;
-        this.password ='';
-        this.checkPass='';
+        this.emptyDataForm();
+      },
+      emptyDataForm(){
+        this.dataForm ={
+          password:'',
+          checkPass:''
+        };
+      },
+      // 表单提交
+      dataFormSubmit () {
+        this.$refs['dataForm'].validate((valid) => {
+          if (valid) {
+            this.postRequest("/user/updatePwd", this.dataForm).then(resp=> {
+              if (resp && resp.status == 200) {
+                this.$message({showClose: true, type: 'success', message: "恭喜你，修改密码成功"});
+                this.dialogVisible = false;
+                this.emptyDataForm();
+                this.$store.commit('logout');
+                this.$router.push("/");
+              }
+            })
+          }
+        })
       },
       handleCommand(cmd){
         var _this = this;
@@ -147,12 +169,33 @@
       }
     },
     data() {
+      var validatePass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入密码'));
+        } else if (value !== this.dataForm.password) {
+          callback(new Error('两次输入密码不一致!'));
+        } else {
+          callback();
+        }
+      }
       return {
         dialogTitle:'',
         dialogVisible: false,
         username: '',
-        password:'',
-        checkPass:''
+        dataForm:{
+          password:'',
+          checkPass:''
+        },
+        dataRule: {
+
+          password: [
+            { required: true, message: '请输入密码', trigger: 'blur' },
+            { min: 6, max: 10, message: '长度在 6 到 10 个字符', trigger: 'blur' }
+          ],
+          checkPass: [
+            { required: true, validator: validatePass, trigger: 'blur' }
+          ]
+        },
       }
     },
     computed: {
