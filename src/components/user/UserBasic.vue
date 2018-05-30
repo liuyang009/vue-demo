@@ -93,13 +93,14 @@
           </template>
         </el-table-column>
       </el-table>
-        <div style="display: flex;justify-content: space-between;margin: 20px 20px 20px -10px">
+        <div style="display: flex;justify-content: space-between;margin: 20px 20px 20px 0px">
           <el-pagination
-            background
-            :page-size="10"
+            @size-change="sizeChangeHandle"
+            :page-size="pageSize"
             :current-page="currentPage"
             @current-change="currentChange"
-            layout="prev, pager, next"
+            :page-sizes="[10, 20, 50, 100]"
+            layout="total, sizes, prev, pager, next, jumper"
             :total="totalCount">
           </el-pagination>
         </div>
@@ -312,7 +313,12 @@
       currentChange(currentChange){
         this.currentPage = currentChange;
         this.loadUsers();
-      }
+      },
+      sizeChangeHandle (val) {
+        this.pageSize = val
+        this.currentPage = 1
+        this.loadUsers();
+      },
     },
     data() {
 
@@ -332,6 +338,7 @@
         tableLoading: false,
         showPwd: true,
         multipleSelection: [],
+        pageSize: 10,
         totalCount: -1,
         currentPage: 1,
         user:{

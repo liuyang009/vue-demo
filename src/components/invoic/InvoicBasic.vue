@@ -66,7 +66,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div style="display: flex;justify-content: space-between;margin: 20px 20px 20px -10px">
+    <div style="display: flex;justify-content: space-between;margin: 20px 20px 20px 0px">
       <el-pagination
         @size-change="sizeChangeHandle"
         @current-change="currentChangeHandle"
@@ -85,6 +85,7 @@
           :title="dialogTitle"
           style="padding: 0px;"
           :close-on-click-modal="false"
+          :before-close="cancelEidt"
           :visible.sync="dialogVisible"
           width="30%">
           <el-row>
