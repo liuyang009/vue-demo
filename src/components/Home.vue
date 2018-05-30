@@ -5,7 +5,7 @@
       <div style="display: flex;align-items: center;margin-right: 7px">
         <el-dropdown @command="handleCommand">
   <span class="el-dropdown-link home_userinfo" style="display: flex;align-items: center">
-    {{showName}}
+    欢迎您，{{showName}}
     <i><img src="http://imgsrc.baidu.com/forum/w=580/sign=1588b7c5d739b6004dce0fbfd9503526/7bec54e736d12f2eb97e1a464dc2d56285356898.jpg" style="width: 40px;height: 40px;margin-right: 5px;margin-left: 5px;border-radius: 40px"/></i>
   </span>
           <el-dropdown-menu slot="dropdown">
