@@ -52,6 +52,12 @@ export const formatRoutes = (routes)=> {
           require(['../components/user/' + component + '.vue'], resolve)
         }else if (component.startsWith("Invoic")) {
           require(['../components/invoic/' + component + '.vue'], resolve)
+        } else if (component.startsWith("Proxy")) {
+          require(['../components/proxy/' + component + '.vue'], resolve)
+        }else if (component.startsWith("Voucher")) {
+          require(['../components/voucher/' + component + '.vue'], resolve)
+        }else if (component.startsWith("Channel")) {
+          require(['../components/channel/' + component + '.vue'], resolve)
         }
       },
       name: name,

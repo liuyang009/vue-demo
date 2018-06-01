@@ -25,7 +25,7 @@ export default new Router({
       },
       children:[{
         path: '/index',
-        name: '主页',
+        name: '',
         component: Index,
         hidden:true
       },{

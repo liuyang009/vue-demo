@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="margin-top: 10px">
       <el-form :inline="true">
         <el-form-item>
           <el-input  placeholder="用户名" v-model="user.username" clearable></el-input>
