@@ -66,6 +66,7 @@ export const uploadFileRequest = (url, params) => {
     }
   });
 }
+
 export const putRequest = (url, params) => {
   return axios({
     method: 'put',
@@ -76,6 +77,18 @@ export const putRequest = (url, params) => {
     }
   });
 }
+
+export const postJsonRequest = (url, params) => {
+  return axios({
+    method: 'put',
+    url: `${base}${url}`,
+    data: params,
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8'
+    }
+  });
+}
+
 export const deleteRequest = (url) => {
   return axios({
     method: 'delete',

@@ -6,6 +6,7 @@ import router from './router'
 import ElementUI from 'element-ui'
 import {getRequest} from './utils/api'
 import {postRequest} from './utils/api'
+import {postJsonRequest} from './utils/api'
 import {deleteRequest} from './utils/api'
 import {putRequest} from './utils/api'
 import {initMenu} from './utils/utils'
@@ -20,6 +21,7 @@ Vue.prototype.getRequest = getRequest;
 Vue.prototype.postRequest = postRequest;
 Vue.prototype.deleteRequest = deleteRequest;
 Vue.prototype.putRequest = putRequest;
+Vue.prototype.postJsonRequest = postJsonRequest;
 
 router.beforeEach((to, from, next)=> {
     if (to.name == 'Login') {

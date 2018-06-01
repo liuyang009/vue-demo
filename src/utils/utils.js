@@ -58,6 +58,8 @@ export const formatRoutes = (routes)=> {
           require(['../components/voucher/' + component + '.vue'], resolve)
         }else if (component.startsWith("Channel")) {
           require(['../components/channel/' + component + '.vue'], resolve)
+        }else if (component.startsWith("Item")) {
+          require(['../components/item/' + component + '.vue'], resolve)
         }
       },
       name: name,
