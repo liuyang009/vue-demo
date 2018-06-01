@@ -223,7 +223,7 @@
         dialogVisible: false,
         tableLoading: false,
         pageSize: 10,
-        totalCount: -1,
+        totalCount: 0,
         currentPage: 1,
         selectItemType:{
           name:''
