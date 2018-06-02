@@ -23,7 +23,6 @@ axios.interceptors.response.use(resp=> {
     if (resp.data.code != 511){
       Message.error({message: resp.data.msg});
     }
-    return;
   }
   return resp;
 }, err=> {

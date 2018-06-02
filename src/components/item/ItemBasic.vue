@@ -150,6 +150,33 @@
                         placeholder="输入商品介绍"></el-input>
             </el-form-item>
 
+            <el-form-item label="展示图:" prop="images">
+              <el-upload
+                class="upload-demo"
+                action="http://127.0.0.1:9090/api/upload2"
+                :on-remove="handleRemove"
+                :on-success="uploadSuccess"
+                :beforeUpload="beforeAvatarUpload"
+                :file-list="fileList"
+                list-type="picture"
+                :limit=1>
+                <el-button size="small" type="primary">点击上传(最多1张)</el-button>
+              </el-upload>
+            </el-form-item>
+
+            <el-form-item label="详情图:" prop="images">
+              <el-upload
+                class="upload-demo"
+                action="http://127.0.0.1:9090/api/upload2"
+                :on-remove="handle2Remove"
+                :on-success="upload2Success"
+                :beforeUpload="beforeAvatarUpload"
+                :file-list="fileList2"
+                list-type="picture"
+                :limit=3>
+                <el-button size="small" type="primary">点击上传(最多3张)</el-button>
+              </el-upload>
+            </el-form-item>
 
           </el-row>
           <span slot="footer" class="dialog-footer">
@@ -168,6 +195,41 @@
     //  this.loadItem();
     },
     methods:{
+      handleRemove(file, fileList) {
+        console.log(file, fileList);
+      },
+      uploadSuccess (response, file, fileList) {
+        console.log('文件列表：', JSON.stringify(fileList))
+        if (response.code && response.code != 200) {
+          this.$message.error({message: response.msg});
+        }
+        console.log('上传文件', response)
+      },
+      handle2Remove(file, fileList2) {
+        console.log(file, fileList2);
+      },
+      upload2Success (response, file, fileList2) {
+        console.log('文件列表2：', JSON.stringify(fileList2))
+        if (response.code && response.code != 200) {
+          this.$message.error({message: response.msg});
+        }
+        console.log('上传文件', response)
+      },
+      // 上传前对文件的大小的判断
+      beforeAvatarUpload (file) {
+        const extension = file.name.split('.')[1] === 'png'
+        const extension2 = file.name.split('.')[1] === 'jpg'
+        const extension3 = file.name.split('.')[1] === 'jpeg'
+        const extension4 = file.name.split('.')[1] === 'bmp'
+        const isLt2M = file.size / 1024 / 1024 < 2
+        if (!extension && !extension2 && !extension3 && !extension4) {
+          this.$message({showClose: true, type: 'warning', message: "上传图片只能是 png、jpg、jpeg、bmp 格式!"});
+        }
+        if (!isLt2M) {
+          this.$message({showClose: true, type: 'warning', message: "上传图片大小不能超过 2MB!"});
+        }
+        return extension || extension2 || extension3 || extension4 && isLt2M
+      },
       // 每页数
       sizeChangeHandle (val) {
         this.pageSize = val
@@ -201,6 +263,8 @@
       cancelView(){
         this.dialogVisible = false;
         this.emptyItemData();
+        this.fileList=[];
+        this.fileList2=[];
       },
       emptySelectItemTypeData(){
         this.selectItemType={
@@ -311,6 +375,8 @@
             { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' }
           ]
         },
+        fileList: [],
+        fileList2:[],
         itemData: []
       }
     }
