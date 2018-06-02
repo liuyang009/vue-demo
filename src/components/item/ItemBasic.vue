@@ -132,18 +132,24 @@
 
             <el-form-item label="商品进价" prop="purchasePrice">
               <el-input v-model="item.purchasePrice" style="width: 80%"
-                        placeholder="请输入商品进价(单位：元)" type="number"></el-input>
+                        placeholder="输入商品进价(单位：元)" type="number"></el-input>
             </el-form-item>
 
             <el-form-item label="建议售价" prop="price">
               <el-input v-model="item.price" style="width: 80%"
-                        placeholder="请输入建议售价(单位：元)" type="number"></el-input>
+                        placeholder="输入建议售价(单位：元)" type="number"></el-input>
             </el-form-item>
 
             <el-form-item label="商品规格" prop="norms">
               <el-input v-model="item.norms" style="width: 80%"
-                        placeholder="请输入商品规格(单位：g/kg/)"></el-input>
+                        placeholder="输入商品规格(单位：g/kg/只/袋)"></el-input>
             </el-form-item>
+
+            <el-form-item label="商品介绍" prop="description">
+              <el-input type="textarea" v-model="item.description" style="width: 80%"
+                        placeholder="输入商品介绍"></el-input>
+            </el-form-item>
+
 
           </el-row>
           <span slot="footer" class="dialog-footer">
@@ -296,7 +302,8 @@
           itemTypeId:'',
           purchasePrice:'',
           price:'',
-          norms:''
+          norms:'',
+          description:''
         },
         rules: {
           name: [
