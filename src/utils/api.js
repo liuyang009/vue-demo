@@ -79,7 +79,7 @@ export const putRequest = (url, params) => {
 
 export const postJsonRequest = (url, params) => {
   return axios({
-    method: 'put',
+    method: 'post',
     url: `${base}${url}`,
     data: params,
     headers: {
