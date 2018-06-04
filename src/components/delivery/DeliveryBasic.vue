@@ -65,8 +65,8 @@
         label="操作">
         <template slot-scope="scope">
           <el-button type="text" @click="showEditView(scope.row)" size="small">修改</el-button>
+          <el-button type="text"  size="small" @click="deleteDelivery(scope.row)">删除</el-button>
           <el-button type="text" style="padding: 3px 4px 3px 4px;margin: 2px" size="small">禁用</el-button>
-          <el-button type="text" style="padding: 3px 4px 3px 4px;margin: 2px" size="small" @click="deleteDelivery(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -154,9 +154,6 @@
         this.delivery = row;
         this.dialogVisible = true;
       },
-      deleteChannel(row){
-
-      },
       cancelView(){
         this.dialogVisible = false;
         this.emptyDeliveryData();
@@ -165,6 +162,7 @@
         this.delivery={
           id:0,
           startDate:'',
+          endDate:'',
           status:''
         }
       },
@@ -214,7 +212,7 @@
         });
       },
       deleteDelivery(row){
-        this.$confirm('此操作将永久删除[' + row.name + '], 是否继续?', '提示', {
+        this.$confirm('此操作将永久删除, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -225,11 +223,11 @@
       },
       doDelete(ids){
         this.tableLoading = true;
-        this.deleteRequest("/channel/delete/" + ids).then(resp=> {
+        this.deleteRequest("/delivery/delete/" + ids).then(resp=> {
           this.tableLoading = false;
           if (resp && resp.status == 200) {
-            this.$message({showClose: true, type: 'success', message: "恭喜你，删除渠道成功"});
-            this.loadChannels();
+            this.$message({showClose: true, type: 'success', message: "恭喜你，删除提货限制成功"});
+            this.loadDelivery();
           }
         })
       }
