@@ -26,6 +26,7 @@
         align="center"
         prop="startDate"
         label="限制开始日期">
+        <template slot-scope="scope">{{ scope.row.startDate | formatDate}}</template>
       </el-table-column>
 
 
@@ -33,6 +34,7 @@
         prop="endDate"
         label="限制开始日期"
         align="center">
+        <template slot-scope="scope">{{ scope.row.endDate | formatDate}}</template>
       </el-table-column>
 
       <el-table-column
@@ -46,8 +48,8 @@
         label="启用状态"
         align="center">
         <template slot-scope="scope">
-          <span v-if="scope.row.status === '1'">启用</span>
-          <span v-if="scope.row.status === '0'">禁用</span>
+          <span v-if="scope.row.status === 1">启用</span>
+          <span v-if="scope.row.status === 0">禁用</span>
         </template>
       </el-table-column>
 
@@ -63,7 +65,8 @@
         label="操作">
         <template slot-scope="scope">
           <el-button type="text" @click="showEditView(scope.row)" size="small">修改</el-button>
-          <el-button type="text" style="padding: 3px 4px 3px 4px;margin: 2px" size="small" @click="deleteDelivery(scope.row)">删除</el-button>
+          <el-button type="text"  size="small" @click="deleteDelivery(scope.row)">删除</el-button>
+          <el-button type="text" style="padding: 3px 4px 3px 4px;margin: 2px" size="small">禁用</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -128,19 +131,19 @@
 <script>
   export default {
     mounted: function () {
-      //this.loadChannels();
+      this.loadDelivery();
     },
     methods:{
       // 每页数
       sizeChangeHandle (val) {
         this.pageSize = val
         this.currentPage = 1
-        this.loadChannels();
+        this.loadDelivery();
       },
       // 当前页
       currentChangeHandle (val) {
         this.currentPage = val
-        this.loadChannels();
+        this.loadDelivery();
       },
       showDeliveryView(){
         this.dialogVisible = true;
@@ -148,11 +151,8 @@
       },
       showEditView(row){
         this.dialogTitle = "修改渠道";
-        this.channel = row;
+        this.delivery = row;
         this.dialogVisible = true;
-      },
-      deleteChannel(row){
-
       },
       cancelView(){
         this.dialogVisible = false;
@@ -162,17 +162,18 @@
         this.delivery={
           id:0,
           startDate:'',
+          endDate:'',
           status:''
         }
       },
-      loadChannels(){
+      loadDelivery(){
         var _this = this;
         this.tableLoading = true;
-        this.getRequest("/channel/list?page=" + this.currentPage + "&size=10&name="+this.selectChannel.name +"&status="+this.selectChannel.status).then(resp=> {
+        this.getRequest("/delivery/list?page=" + this.currentPage + "&size="+ this.pageSize).then(resp=> {
           this.tableLoading = false;
           if (resp && resp.status == 200) {
             var data = resp.data;
-            _this.channelData = data.data.content;
+            _this.deliveryData = data.data.content;
             _this.totalCount = data.data.totalElements;
           }
         })
@@ -180,7 +181,7 @@
       addOrUpdateHandle(form){
         this.$refs[form].validate((valid) => {
           if (valid) {
-            if (this.channel.id) {
+            if (this.delivery.id) {
               //更新
               this.tableLoading = true;
               this.putRequest("/channel/update", this.channel).then(resp=> {
@@ -195,13 +196,13 @@
             } else {
               //添加
               this.tableLoading = true;
-              this.postRequest("/channel/add", this.channel).then(resp=> {
+              this.postJsonRequest("/delivery/add", this.delivery).then(resp=> {
                 this.tableLoading = false;
                 if (resp && resp.status == 200) {
-                  this.$message({showClose: true, type: 'success', message: "恭喜你，新增渠道成功"});
+                  this.$message({showClose: true, type: 'success', message: "恭喜你，新增提货限制成功"});
                   this.dialogVisible = false;
-                  this.emptyChannelData();
-                  this.loadChannels();
+                  this.emptyDeliveryData()
+                  this.loadDelivery();
                 }
               })
             }
@@ -211,7 +212,7 @@
         });
       },
       deleteDelivery(row){
-        this.$confirm('此操作将永久删除[' + row.name + '], 是否继续?', '提示', {
+        this.$confirm('此操作将永久删除, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -222,11 +223,11 @@
       },
       doDelete(ids){
         this.tableLoading = true;
-        this.deleteRequest("/channel/delete/" + ids).then(resp=> {
+        this.deleteRequest("/delivery/delete/" + ids).then(resp=> {
           this.tableLoading = false;
           if (resp && resp.status == 200) {
-            this.$message({showClose: true, type: 'success', message: "恭喜你，删除渠道成功"});
-            this.loadChannels();
+            this.$message({showClose: true, type: 'success', message: "恭喜你，删除提货限制成功"});
+            this.loadDelivery();
           }
         })
       }
