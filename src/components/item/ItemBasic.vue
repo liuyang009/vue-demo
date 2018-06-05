@@ -150,7 +150,7 @@
                         placeholder="输入商品介绍"></el-input>
             </el-form-item>
 
-            <el-form-item label="展示图:" prop="images">
+            <el-form-item label="展示图:" prop="indexImages">
               <el-upload
                 class="upload-demo"
                 action="http://127.0.0.1:9090/api/upload2"
