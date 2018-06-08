@@ -1,8 +1,8 @@
 <template>
   <div style="margin-top: 20px">
     <el-form :inline="true">
-      <el-form-item >
-        <el-select v-model="voucher.status" placeholder="请选择状态">
+      <el-form-item>
+        <el-select style="width: 120px" v-model="voucher.status" placeholder="请选择状态">
           <el-option
             v-for="item in options2"
             :key="item.value"
@@ -13,7 +13,7 @@
       </el-form-item>
 
       <el-form-item>
-        <el-select v-model="voucher.channel" placeholder="发放渠道">
+        <el-select style="width: 150px" v-model="voucher.channel" placeholder="发放渠道">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -61,7 +61,8 @@
         fixed
         align="center"
         prop="id"
-        label="代理商编号">
+        label="代理商编号"
+      width="100px">
       </el-table-column>
 
       <el-table-column

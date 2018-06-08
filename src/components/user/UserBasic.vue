@@ -57,7 +57,8 @@
         <el-table-column
           prop="email"
           label="邮箱"
-          align="center">
+          align="center"
+          width="160px">
         </el-table-column>
 
         <el-table-column
@@ -69,7 +70,8 @@
         <el-table-column
           prop="gmtCreate"
           label="创建时间"
-          align="center">
+          align="center"
+          width="160px">
           <template slot-scope="scope">{{ scope.row.gmtCreate | formatDateTime}}</template>
         </el-table-column>
 
@@ -206,7 +208,7 @@
       loadUsers(){
         var _this = this;
         this.tableLoading = true;
-        this.getRequest("/user/list?page=" + this.currentPage + "&size=10&username="+this.user.username).then(resp=> {
+        this.getRequest("/user/list?page=" + this.currentPage + "&size=10&username="+this.user.username+"&mobile="+this.user.mobile).then(resp=> {
           this.tableLoading = false;
           if (resp && resp.status == 200) {
             var data = resp.data;
